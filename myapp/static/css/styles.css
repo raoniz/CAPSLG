@@ -1,0 +1,10 @@
+.nav {
+  border-radius: 0px !important;
+}
+
+.form-container {
+  width: 50%;
+  box-shadow: 2px 2px 5px #333;
+  padding: 1.5%;
+  border-radius: 10px;
+}
