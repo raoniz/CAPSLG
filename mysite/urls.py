@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from myapp import views
-from django.urls import path
+from django.urls import path, include
 
 urlpatterns = [
-    # path('polls/', polls.urls),
     path('admin/', admin.site.urls),
-    path('index/', views.index),
+    path('index/', views.index, name='index'),
+    path('userPreference/', views.userPreference, name='userPreference'),
+    path('smartList/', views.smartList, name='smartList'),
 ]
