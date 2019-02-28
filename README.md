@@ -5,7 +5,7 @@
 [![Issues](https://img.shields.io/github/issues/raoniz/CAPSLG.svg?style=for-the-badge)](https://github.com/raoniz/CAPSLG/issues)
 ![Language Count](https://img.shields.io/github/languages/count/raoniz/CAPSLG.svg?style=for-the-badge&color=orange)
 [![Requirements](https://img.shields.io/requires/github/raoniz/CAPSLG.svg?style=for-the-badge)](https://github.com/raoniz/CAPSLG/blob/master/requirements.txt)
-![Top Language](https://img.shields.io/github/languages/top/raoniz/CAPSLG.svg?style=for-the-badge&color=red&label=html%20used)
+![Top Language](https://img.shields.io/github/languages/top/raoniz/CAPSLG.svg?style=for-the-badge&color=red)
 [![License: GPL-2.0](https://img.shields.io/badge/License-GPL--3.0-success.svg?style=for-the-badge)](https://opensource.org/licenses/GPL-3.0)
 ![Size](https://img.shields.io/github/repo-size/raoniz/CAPSLG.svg?style=for-the-badge&color=yellow)
 
