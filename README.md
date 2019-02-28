@@ -17,7 +17,7 @@ A Django based web-project to compute probability of a student to secure admissi
 
 ## Pre-requisites
 
-* Python 3.6+ (If not available, kindly download from [here](https://www.python.org/downloads/))
+* Python 3.5+ (If not available, kindly download from [here](https://www.python.org/downloads/))
 * Python Virtual Environment (optional), install virtual environment using:
 
   ```console
