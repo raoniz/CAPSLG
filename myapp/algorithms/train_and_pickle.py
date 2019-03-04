@@ -7,6 +7,7 @@ import pickle
 
 # Change as per the name and location of the training data file
 def main(data_url, pickle_name):
+    print(data_url)
     url = '../data/train_data/'
     url += data_url
 
@@ -31,11 +32,13 @@ def main(data_url, pickle_name):
     adamodel.fit(train, train_labels)
 
     # Store with respective college name
-    filename = '../data/pickles/'
+    filename = '../data/pickles/colleges/'
     filename += pickle_name
 
     with open(filename, 'wb') as f:
         pickle.dump(adamodel, f)
 
 if __name__ == '__main__':
-    main('vjti.csv', 'vjti.pkl')
+    urls = ["vjti","sp","spit","ict","kjsce","kjit","vik","sa","dbit","djs","fcr","ss","rgit","rcr","bvc","dmc","afrc","kc","kgc","ltc","mgm","pvp","pit","rait","jc","sies","sfit","tec","tcet","tse","vit"]
+    for url in urls:
+        main(url + '.csv', url + '.pkl')

@@ -16,10 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from myapp import views
 from django.urls import path, include
+from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/', views.index, name='index'),
     path('userPreference/', views.userPreference, name='userPreference'),
     path('smartList/', views.smartList, name='smartList'),
+    path('get_branches/', views.get_branches, name='get_branches'),
 ]

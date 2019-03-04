@@ -57,5 +57,30 @@
     <!-- Custom -->
     <script src="{% static 'js/custom.js' %}" charset="utf-8"></script>
 
+<!-- // get branches dynamically according to selected college. -->
+    <script type="text/javascript">
+      $(function(){
+        $("#id_college").change(function () {
+          var college = $(this).val();
+          $.ajax({
+            url: '{% url "get_branches" %}',
+            data: { 
+              csrfmiddlewaretoken: '{{ csrf_token }}',
+              college: college
+              },
+            success: function (response) {
+              response = JSON.parse(response);
+              $('#id_branch').empty();
+              $.each(response, function(key, value) {   
+                $('#id_branch')
+                .append($('<option>', { value : value[0] })
+                .text(value[1])); 
+              });
+            }
+          });
+        });
+      });
+    </script>
+
   </body>
 </html>
