@@ -6,7 +6,7 @@ import numpy as np
 import pickle
 import json
 
-from .models import UserForm, PredictCollege
+from .models import UserForm, PredictCollege, CollegeData
 
 def index(request):
     flag = False
@@ -53,4 +53,11 @@ def userPreference(request):
     return render(request, 'user_preference.html',{'form': form})
 
 def smartList(request):
-    return HttpResponse("Helloworld")
+    fees = int(request.GET.get('selected_fees'))
+    college_list = json.loads(request.GET.get('selected_colleges'))
+    fees_structure = CollegeData.fees
+    new_college_list = []
+    for clg in college_list:
+        if fees >= fees_structure[clg[2]]:
+            new_college_list.append(clg)
+    return HttpResponse(json.dumps(new_college_list))

@@ -24,4 +24,5 @@ urlpatterns = [
     path('userPreference/', views.userPreference, name='userPreference'),
     path('smartList/', views.smartList, name='smartList'),
     path('getBranches/', views.getBranches, name='getBranches'),
+    path('apply_filter/', views.smartList, name='apply_filter'),
 ]

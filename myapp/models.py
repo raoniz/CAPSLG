@@ -83,6 +83,39 @@ COLLEGE_CHOICES = (
     ("vit","Vidyalankar Institute of Technology"),
 )
 
+FEES = {'vjti':83805,
+        'sp':85020,
+        'spit':149000,
+        'ict':81000,
+        'kjsce':173680,
+        'kjit':132605,
+        'vik':107790,
+        'sa':108000,
+        'dbit':122770,
+        'djs':134750,
+        'fcr':145085,
+        'ss':118890,
+        'rgit':96470,
+        'rcr':82000,
+        'bvc':85750,
+        'dmc':92500,
+        'afrc':140000,
+        'kc':130000,
+        'kgc':99000,
+        'lti':117856,
+        'mgm':82500,
+        'pvp':122960,
+        'pit':117000,
+        'rait':88000,
+        'jc':86000,
+        'sies':105500,
+        'sfit':108210,
+        'tec':90250,
+        'tcet':121500,
+        'tse':142500,
+        'vit':136272
+    }
+
 class UserForm(forms.Form):
     name = forms.CharField(max_length=100)
     category = forms.CharField(max_length=15, widget=forms.Select(choices=CATEGORY_CHOICES))
@@ -97,3 +130,5 @@ class PredictCollege(forms.Form):
     score = forms.IntegerField()
     branch = forms.ChoiceField(choices=BRANCH_CHOICES)
 
+class CollegeData(models.Model):
+    fees = FEES

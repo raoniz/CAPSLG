@@ -21,6 +21,9 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
 
+    <!-- animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css" />
+
 </head>
 
 <body>
@@ -33,7 +36,7 @@
             </div>
 
             <ul class="list-unstyled components">
-                <li>
+                <!-- <li>
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Filter 1</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
@@ -46,29 +49,51 @@
                             <a href="#">Category 3</a>
                         </li>
                     </ul>
+                </li> -->
+                <li>
+                    <a>
+                        <span>Fees Structure</span>
+                        <span style="float:right;">
+                            <label class="switch">
+                              <input type="checkbox" id="fees-structure" data-checked="false">
+                              <span class="slider round"></span>
+                            </label>
+                        </span>
+                    </a>
+                    <div class="property-fees">
+                        <span>Rupees(₹) per Year</span>
+                        <input type="number" name="fees" class="fees" disabled="disabled" value="127500">
+                        <!-- <div style="float: right;">Lac</div> -->
+                        <input class="slider-fees custom-range" type="range" min="80000" max="175000" step="10" value="127500">
+                    </div>
                 </li>
                 <li>
-                    <a href="#">Filter 2</a>
+                    <a href="#">NAAC Grade
+                        <span style="float:right;">
+                            <label class="switch">
+                              <input type="checkbox" id="naac-grade" data-checked="false">
+                              <span class="slider round"></span>
+                            </label>
+                        </span>
+                    </a>
                 </li>
                 <li>
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Filter 3</a>
-                    <ul class="collapse list-unstyled" id="pageSubmenu">
-                        <li>
-                            <a href="#">Category 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Category 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Category 3</a>
-                        </li>
-                    </ul>
+                    <a href="#">Location
+                        <span style="float:right;">
+                            <label class="switch">
+                              <input type="checkbox" id="location" data-checked="false">
+                              <span class="slider round"></span>
+                            </label>
+                        </span>
+                    </a>
                 </li>
                 <li>
-                    <a href="#">Filter 4</a>
-                </li>
-                <li>
-                    <a href="#">Filter 5</a>
+                    <div style="width: fit-content; margin:auto;padding: 15px 0px 0px;">    
+                        <button class="btn apply-filter">
+                            <i class="fas fa-filter"></i>
+                            <span>Apply</span>
+                        </button>
+                    </div>
                 </li>
             </ul>
         </nav>
@@ -88,10 +113,10 @@
                 </ul>
               </div>
             </nav>
-            <button type="button" id="sidebarCollapse" class="btn btn-info">
+           <!--  <button type="button" id="sidebarCollapse" class="btn btn-info">
                 <i class="fas fa-filter"></i>
-                <span>Apply filters</span>
-            </button>
+                <span>Add filters</span>
+            </button> -->
             <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fas fa-align-justify"></i>
             </button>
@@ -108,6 +133,7 @@
                 {% endfor %}
               </ul>
             </div>
+            <script type="text/javascript"> var college_list = {{ colleges|safe }}; </script>
 
             {% else %}
             <div class="not-eligible animated">
@@ -119,8 +145,8 @@
         </div>
     </div>
 
-    <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- jQuery CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Popper.JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <!-- Bootstrap JS -->
@@ -129,16 +155,103 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
     <script type="text/javascript">
+
+        // General Scripts
         $(document).ready(function () {
+            // Scroll effect sidebar
             $("#sidebar").mCustomScrollbar({
                 theme: "minimal"
             });
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar, #content').toggleClass('active');
-                $('.collapse.in').toggleClass('in');
-                $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+
+            // list Animation of college list
+            listAnimation();
+        });
+
+        // list animation
+        function listAnimation() {
+            var i = 0;
+            var delay_duration = 0.1;
+            var animations = ["fadeInRight","fadeInUp","flipInX","lightSpeedIn","rotateInDownRight","rotateInUpLeft","zoomInDown"];
+            var animation = "animated " + animations[Math.floor(Math.random() * animations.length)];
+            $(".list-group li").each(function(){
+                $(this).css("animation-delay",(delay_duration * i++)+"s");
+                $(this).css("animation-duration","0.8s");
+                $(this).addClass(animation);
+            });
+            setTimeout(function(){
+                 $(".list-group li").each(function(){
+                    $(this).removeClass(animation);
+                });
+            },(++i * delay_duration * 1000));
+        }
+
+        // filters script
+        $(function(){
+
+            // filter fees
+            $("#fees-structure").change(function(){
+                var flag = ($(this).attr("data-checked")=="false") ? "true" : "false";
+                $(this).attr("data-checked",flag);
+                $('.property-fees').slideToggle();
+            })
+
+            $(".slider-fees").on('input', function(){
+                $(".fees").val($(this).val());
+            });
+
+            // on apply filters
+            $(".apply-filter").click(function(){
+                if(college_list) {
+                    fees_checked = ($("#fees-structure").attr("data-checked") == 'true');
+                    naac_grade_checked = ($("#fees-structure").attr("data-checked") == 'true');
+                    location_checked = ($("#fees-structure").attr("data-checked") == 'true');
+
+                    selected_fees = fees_checked ? $(".fees").val() : $(".slider-fees").attr('max')
+                    
+                    if(fees_checked || naac_grade_checked || location_checked)
+                        apply_filter(selected_fees);
+                    else {
+                        $(".apply-filter").addClass("animated shake");
+                        setTimeout(function(){
+                            $(".apply-filter").removeClass("animated shake");
+                        },1000);
+                    }
+
+                } else {
+                    $(".not-eligible").addClass("swing");
+                    setTimeout(function(){
+                        $(".not-eligible").removeClass("swing");
+                    },1000);
+                }
+
             });
         });
+
+
+        function apply_filter(selected_fees){
+            // college_codes = [];
+            // for (var i = college_list.length - 1; i >= 0; i--) {
+            //     college_codes.push(college_list[i][2]);
+            // }
+            $.ajax({
+            url: '{% url "apply_filter" %}',
+            data: { 
+              "csrfmiddlewaretoken": '{{ csrf_token }}',
+              "selected_colleges": JSON.stringify(college_list),
+              "selected_fees": selected_fees
+              },
+            success: function (response) {
+                $(".list-group").empty();
+                response = JSON.parse(response);
+                $.each(response, function(key, value) {   
+                    $('.list-group')
+                    .append('<li class="list-group-item"><span>'+value[0]+'</span><span style="float:right; padding-right: 5%;">Probability: '+ value[1] +'</span></li>');
+                });
+                listAnimation();
+              // console.log(response);
+            }
+          });
+        }
     </script>
 </body>
 
