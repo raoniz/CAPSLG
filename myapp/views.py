@@ -1,12 +1,12 @@
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from rebar.testing import flatten_to_dict
-from .algorithms import predict_proba
+from .algorithms import predict_proba, generate_list
 import numpy as np
 import pickle
 import json
 
-from .models import UserForm,PredictCollege
+from .models import UserForm, PredictCollege
 
 def index(request):
     flag = False
@@ -31,7 +31,7 @@ def index(request):
         form = UserForm()
     return render(request, 'index.html', {'form': form, 'flag': flag})
 
-def get_branches(request):
+def getBranches(request):
     college = request.GET.get('college')
     branches = pickle.load(open('myapp/data/pickles/branches.pkl','rb'))
     return HttpResponse(json.dumps(branches[college]))
@@ -43,7 +43,11 @@ def userPreference(request):
         form = PredictCollege(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            return render(request, 'smart_list.html')
+            form_data = flatten_to_dict(form)
+            # collect college list according to the seleted criteria
+            colleges = generate_list.generate(form_data['score'],form_data['branch'],form_data['category'],'myapp/data/pickles/')
+            flag = True if len(colleges) != 0 else False
+            return render(request, 'smart_list.html', {'colleges':colleges, 'flag':flag})
     else:
         form = PredictCollege()
     return render(request, 'user_preference.html',{'form': form})

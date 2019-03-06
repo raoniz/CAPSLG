@@ -97,13 +97,24 @@
             </button>
 
             <!-- List of colleges -->
+            {% if flag %}
             <div class="card list-of-college">
               <ul class="list-group list-group-flush">
-                <li class="list-group-item">College 01</li>
-                <li class="list-group-item">College 02</li>
-                <li class="list-group-item">College 03</li>
+                {% for i in colleges %}
+                <li class="list-group-item">
+                    <span>{{ i.0 }}</span>
+                    <span style="float:right; padding-right: 5%;">Probability: {{ i.1 }}</span>
+                </li>
+                {% endfor %}
               </ul>
             </div>
+
+            {% else %}
+            <div class="not-eligible animated">
+                Opps you are not eligible in any college for your selected branch!
+            </div>
+            <script type="text/javascript"> var college_list = false; </script>
+            {% endif %}
 
         </div>
     </div>
@@ -122,7 +133,6 @@
             $("#sidebar").mCustomScrollbar({
                 theme: "minimal"
             });
-
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar, #content').toggleClass('active');
                 $('.collapse.in').toggleClass('in');
