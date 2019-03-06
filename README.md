@@ -61,3 +61,20 @@ A Django based web-project to compute probability of a student to secure admissi
       ```
 
 5. Visit the local server at `http://localhost:8000/index/`
+
+## Contributors
+
+<table>
+    <td>
+        <a href="https://github.com/Vir-al">
+            <img src="https://github.com/Vir-al.png" height=150px width=150px><br>
+            Viral Limbani
+        </a>
+    </td>
+    <td>
+        <a href="https://github.com/raoniz">
+            <img src="https://github.com/raoniz.png" height=150px width=150px><br>
+            Rahul Soni
+        </a>
+    </td>
+</table>
