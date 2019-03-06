@@ -10,7 +10,7 @@ CATEGORY_CHOICES = (
     ('LOBCS', 'Ladies Other Backward Class(OBC)'),
 )
 
-BRANCH_CHOICES = vjti = (
+INITIAL_BRANCH_CHOICES = (
     ('IT', 'Information Techonology'),
     ('Chemical', 'Chemical'),
     ('Computer', 'Computer Engineering'),
@@ -21,6 +21,32 @@ BRANCH_CHOICES = vjti = (
     ('Production','Production'),
     ('Mechanical','Mechanical'),
     ('Textile','Textile'),
+)
+
+BRANCH_CHOICES = (
+    ('IT', 'Information Techonology'),
+    ('Computer', 'Computer Engineering'),
+    ('Chemical', 'Chemical'),
+    ('Civil', 'Civil Engineering'),
+    ('Electrical', 'Electrical'),
+    ('EXTC','EXTC'),
+    ('ETRX','ETRX'),
+    ('Production','Production'),
+    ('Mechanical','Mechanical'),
+    ('Textile','Textile'),
+    ('DyestuffTechnology', 'Dyestuff Technology'),
+    ('OleochemicalsandSurfactantsTechnology', 'Oleochemicals and Surfactants Technology'),
+    ('PharmaceuticalsChemistryandTechnology', 'Pharmaceuticals Chemistry and Technology'),
+    ('FibresandTextileProcessingTechnology','Fibres and Textile Processing Technology'),
+    ('PolymerEngineeringandTechnology','Polymer Engineering and Technology'),
+    ('SurfaceCoatingTechnology','Surface Coating Technology'),
+    ('Instrumental','Instrumental'),
+    ('BioMedical','Bio Medical'),
+    ('Automobile','Automobile'),
+    ('Instrumentation','Instrumentation'),
+    ('BioTechnology','Bio Technology'),
+    ('PrintingandPacking','Printing and Packing'),
+    ('Mechatronics','Mechatronics'),
 )
 
 COLLEGE_CHOICES = (
@@ -63,9 +89,11 @@ class UserForm(forms.Form):
     score = forms.IntegerField()
     college = forms.CharField(max_length=15, widget=forms.Select(choices=COLLEGE_CHOICES))
     # branch = forms.CharField(max_length=15, widget=forms.Select(choices=BRANCH_CHOICES))
-    branch = forms.ChoiceField(choices=BRANCH_CHOICES)
+    branch = forms.ChoiceField(choices=INITIAL_BRANCH_CHOICES)
 
 class PredictCollege(forms.Form):
     name = forms.CharField(max_length=100)
     category = forms.CharField(max_length=15, widget=forms.Select(choices=CATEGORY_CHOICES))
     score = forms.IntegerField()
+    branch = forms.ChoiceField(choices=BRANCH_CHOICES)
+

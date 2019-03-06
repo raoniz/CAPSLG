@@ -63,7 +63,7 @@
         $("#id_college").change(function () {
           var college = $(this).val();
           $.ajax({
-            url: '{% url "get_branches" %}',
+            url: '{% url "getBranches" %}',
             data: { 
               csrfmiddlewaretoken: '{{ csrf_token }}',
               college: college

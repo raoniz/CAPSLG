@@ -110,6 +110,15 @@ rgit = (
     ('Mechanical','Mechanical'),   
 )
 
+rcr = (
+    ('Computer', 'Computer Engineering'),
+    ('Civil', 'Civil Engineering'),
+    ('ETRX', 'ETRX'),
+    ('EXTC','EXTC'),
+    ('BioTechnology','Bio Technology'),
+    ('Mechanical','Mechanical'),
+)
+
 bvc = (
     ('Chemical', 'Chemical'),
     ('IT', 'Information Techonology'),
@@ -255,7 +264,7 @@ vit = (
     ('BioMedical','Bio Medical'),
 )
 
-branches = {'vjti':vjti,'sp':sp,'spit':spit,'ict':ict,'kjsce':kjsce,'kjit':kjit,'vik':vik,'sa':sa,'dbit':dbit,'djs':djs,'fcr':fcr,'ss':ss,'rgit':rgit,'bvc':bvc,'dmc':dmc,'afrc':afrc,'kc':kc,'kgc':kgc,'ltc':ltc,'mgm':mgm,'pvp':pvp,'pit':pit,'rait':rait,'jc':jc,'sies':sies,'sfit':sfit,'tec':tec,'tcet':tcet,'tse':tse,'vit':vit}
+branches = {'vjti':vjti,'sp':sp,'spit':spit,'ict':ict,'kjsce':kjsce,'kjit':kjit,'vik':vik,'sa':sa,'dbit':dbit,'djs':djs,'fcr':fcr,'ss':ss,'rgit':rgit,'rcr':rcr,'bvc':bvc,'dmc':dmc,'afrc':afrc,'kc':kc,'kgc':kgc,'ltc':ltc,'mgm':mgm,'pvp':pvp,'pit':pit,'rait':rait,'jc':jc,'sies':sies,'sfit':sfit,'tec':tec,'tcet':tcet,'tse':tse,'vit':vit}
 
 with open("../data/pickles/branches.pkl",'wb') as file:
 	pickle.dump(branches,file)

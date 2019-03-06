@@ -23,5 +23,5 @@ urlpatterns = [
     path('index/', views.index, name='index'),
     path('userPreference/', views.userPreference, name='userPreference'),
     path('smartList/', views.smartList, name='smartList'),
-    path('get_branches/', views.get_branches, name='get_branches'),
+    path('getBranches/', views.getBranches, name='getBranches'),
 ]
