@@ -131,4 +131,20 @@ class PredictCollege(forms.Form):
     branch = forms.ChoiceField(choices=BRANCH_CHOICES)
 
 class CollegeData(models.Model):
-    fees = FEES
+    def get_branch_name(self, branch_code):
+        for b in BRANCH_CHOICES:
+            if branch_code == b[0]:
+                return b[1]
+
+    def get_category_name(self, category_code):
+        for c in CATEGORY_CHOICES:
+            if category_code == c[0]:
+                return c[1]
+
+    def get_fees(self, college_code):
+        return FEES[college_code]
+
+    def get_college_name(self, college_code):
+        for c in COLLEGE_CHOICES:
+            if college_code == c[0]:
+                return c[1]

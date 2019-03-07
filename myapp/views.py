@@ -21,7 +21,9 @@ def index(request):
             filename = 'myapp/data/pickles/colleges/' + form_data['college'] + '.pkl'
             test = np.array([2019, form_data['branch'], form_data['category'], form_data['score']])
             form_data['probability'] = predict_proba.main(filename, test)
-
+            clgData = CollegeData()
+            form_data['college'] = clgData.get_college_name(form_data['college'])
+            form_data['category'] = clgData.get_category_name(form_data['category'])
             # redirect to a new URL:
             # return HttpResponseRedirect('/index/')
             return render(request, 'index.html', {'form': form, 'form_data': form_data, 'flag': flag})
@@ -47,7 +49,10 @@ def userPreference(request):
             # collect college list according to the seleted criteria
             colleges = generate_list.generate(form_data['score'],form_data['branch'],form_data['category'],'myapp/data/pickles/')
             flag = True if len(colleges) != 0 else False
-            return render(request, 'smart_list.html', {'colleges':colleges, 'flag':flag})
+            clgData = CollegeData()
+            form_data['branch'] = clgData.get_branch_name(form_data['branch'])
+            form_data['category'] = clgData.get_category_name(form_data['category'])
+            return render(request, 'smart_list.html', {'colleges':colleges, 'flag':flag, 'form_data':form_data})
     else:
         form = PredictCollege()
     return render(request, 'user_preference.html',{'form': form})
@@ -55,9 +60,9 @@ def userPreference(request):
 def smartList(request):
     fees = int(request.GET.get('selected_fees'))
     college_list = json.loads(request.GET.get('selected_colleges'))
-    fees_structure = CollegeData.fees
+    clgData = CollegeData()
     new_college_list = []
     for clg in college_list:
-        if fees >= fees_structure[clg[2]]:
+        if fees >= clgData.get_fees(clg[2]):
             new_college_list.append(clg)
     return HttpResponse(json.dumps(new_college_list))

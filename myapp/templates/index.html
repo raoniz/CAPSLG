@@ -30,7 +30,7 @@
 
       {% if flag %}
         <div class="card bg-info text-white container-fluid form-container">
-          <div class="card-body">Hello, {{form_data.name}}! Your probability to secure admission in {{form_data.college}} under {{form_data.category}} quota is <strong>{{form_data.probability}}</strong></div>
+          <div class="card-body">Hello, <strong>{{form_data.name}}!</strong> Your probability to secure admission in <strong>{{form_data.college}}</strong> under <strong>{{form_data.category}}</strong> quota is <strong>{{form_data.probability}}</strong></div>
         </div>
       {% endif %}
 
