@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>CAPSLG</title>
-
+    <link rel="shortcut icon" type="image/png" href="{% static 'icons/favicon.png' %}"/>
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!-- Our Custom CSS -->
@@ -37,8 +37,7 @@
 
             <ul class="list-unstyled components">
                 <li>
-                    <a>
-                        <span>Fees Structure</span>
+                    <a>Fees Structure
                         <span style="float:right;">
                             <label class="switch">
                               <input type="checkbox" id="fees-structure" data-checked="false">
@@ -46,7 +45,7 @@
                             </label>
                         </span>
                     </a>
-                    <div class="property-fees">
+                    <div id="fees" class="property">
                         <span>Rupees(₹) per Year</span>
                         <input type="number" name="fees" class="fees" disabled="disabled" value="127500">
                         <!-- <div style="float: right;">Lac</div> -->
@@ -54,7 +53,7 @@
                     </div>
                 </li>
                 <li>
-                    <a href="#">NAAC Grade
+                    <a>NAAC Grade
                         <span style="float:right;">
                             <label class="switch">
                               <input type="checkbox" id="naac-grade" data-checked="false">
@@ -64,7 +63,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">Location
+                    <a>Location
                         <span style="float:right;">
                             <label class="switch">
                               <input type="checkbox" id="location" data-checked="false">
@@ -72,6 +71,12 @@
                             </label>
                         </span>
                     </a>
+                    <div id="location-drop" class="property">
+                        <span>Distance(kms.)</span>
+                        <input type="number" name="location" class="location" disabled="disabled" value="50">
+                        <!-- <div style="float: right;">Lac</div> -->
+                        <input class="slider-location custom-range" type="range" min="0" max="100" step="1" value="50">
+                    </div>
                 </li>
                 <li>
                     <div style="width: fit-content; margin:auto;padding: 15px 0px 0px;">
@@ -118,7 +123,7 @@
 	            </div>
 	            <div class="row">
 	            	<div class="col-sm-4"><span>Category:</span> {{form_data.category}}</div>
-	            	<div class="col-sm-4"><span>Location:</span> {{form_data.name}}</div>
+	            	<div class="col-sm-4"><span>Location:</span> {{form_data.location}}</div>
 	            	<div class="col-sm-4">
 	            		<button class="btn dark-button"><i class="fa fa-edit"></i> Edit choice</button>
 	            	</div>
@@ -141,7 +146,7 @@
 
             {% else %}
             <div class="not-eligible animated">
-                Opps you are not eligible in any college for your selected branch!
+                Oops, you don't qualify for cut-offs of any college for your selected branch!
             </div>
             <script type="text/javascript"> var college_list = false; </script>
             {% endif %}
@@ -157,6 +162,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
     <!-- jQuery Custom Scroller CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+    <!-- Custom -->
+    <script src="{% static 'js/custom.js' %}" charset="utf-8"></script>
 
     <script type="text/javascript">
 
@@ -166,28 +173,9 @@
             $("#sidebar").mCustomScrollbar({
                 theme: "minimal"
             });
-
             // list Animation of college list
             listAnimation();
         });
-
-        // list animation
-        function listAnimation() {
-            var i = 0;
-            var delay_duration = 0.1;
-            var animations = ["fadeInRight","fadeInUp","flipInX","lightSpeedIn","zoomInDown"]; //,"rotateInDownRight","rotateInUpLeft"
-            var animation = "animated " + animations[Math.floor(Math.random() * animations.length)];
-            $(".list-group li").each(function(){
-                $(this).css("animation-delay",(delay_duration * i++)+"s");
-                $(this).css("animation-duration","0.8s");
-                $(this).addClass(animation);
-            });
-            setTimeout(function(){
-                 $(".list-group li").each(function(){
-                    $(this).removeClass(animation);
-                });
-            },(++i * delay_duration * 1000));
-        }
 
         // filters script
         $(function(){
@@ -196,24 +184,42 @@
             $("#fees-structure").change(function(){
                 var flag = ($(this).attr("data-checked")=="false") ? "true" : "false";
                 $(this).attr("data-checked",flag);
-                $('.property-fees').slideToggle();
+                $('#fees').slideToggle();
             })
 
             $(".slider-fees").on('input', function(){
                 $(".fees").val($(this).val());
             });
 
+            $("#naac-grade").change(function(){
+                var flag = ($(this).attr("data-checked")=="false") ? "true" : "false";
+                $(this).attr("data-checked",flag);
+            })
+
+            $("#location").change(function(){
+                var flag = ($(this).attr("data-checked")=="false") ? "true" : "false";
+                $(this).attr("data-checked",flag);
+                $('#location-drop').slideToggle();
+            })
+
+            $(".slider-location").on('input', function(){
+                $(".location").val($(this).val());
+            });
+
             // on apply filters
             $(".apply-filter").click(function(){
                 if(college_list) {
                     fees_checked = ($("#fees-structure").attr("data-checked") == 'true');
-                    naac_grade_checked = ($("#fees-structure").attr("data-checked") == 'true');
-                    location_checked = ($("#fees-structure").attr("data-checked") == 'true');
+                    naac_grade_checked = ($("#naac-grade").attr("data-checked") == 'true');
+                    location_checked = ($("#location").attr("data-checked") == 'true');
 
-                    selected_fees = fees_checked ? $(".fees").val() : $(".slider-fees").attr('max')
+                    selected_fees = fees_checked ? $(".fees").val() : $(".slider-fees").attr('max');
+                    selected_location = "{{form_data.location}}";
+                    selected_distance = location_checked ? $(".location").val() : $(".slider-location").attr('max');
 
-                    if(fees_checked || naac_grade_checked || location_checked)
-                        apply_filter(selected_fees);
+                    if(fees_checked || naac_grade_checked || location_checked) {
+                        apply_filter(selected_fees, selected_location, selected_distance);
+                    }
                     else {
                         $(".apply-filter").addClass("animated shake");
                         setTimeout(function(){
@@ -227,22 +233,23 @@
                         $(".not-eligible").removeClass("swing");
                     },1000);
                 }
-
             });
         });
 
-
-        function apply_filter(selected_fees){
+        function apply_filter(selected_fees, selected_location, selected_distance){
             // college_codes = [];
             // for (var i = college_list.length - 1; i >= 0; i--) {
             //     college_codes.push(college_list[i][2]);
             // }
+            console.log(selected_location);
             $.ajax({
-            url: '{% url "apply_filter" %}',
+            url: '{% url "smart_list" %}',
             data: {
               "csrfmiddlewaretoken": '{{ csrf_token }}',
               "selected_colleges": JSON.stringify(college_list),
-              "selected_fees": selected_fees
+              "selected_fees": selected_fees,
+              "selected_distance": selected_distance,
+              "selected_location": selected_location
               },
             success: function (response) {
                 $(".list-group").empty();
@@ -253,9 +260,16 @@
                 });
                 listAnimation();
               // console.log(response);
+            }, error: function(response, status, exception) {
+              console.log("Response: " + response);
+              console.log("Status: " + status);
+              console.log("Exception: " + exception);
             }
           });
         }
+
+
+
     </script>
 </body>
 

@@ -4,6 +4,7 @@ from rebar.testing import flatten_to_dict
 from .algorithms import predict_proba, generate_list
 import numpy as np
 import pickle
+import googlemaps
 import json
 
 from .models import UserForm, PredictCollege, CollegeData
@@ -50,6 +51,7 @@ def userPreference(request):
             colleges = generate_list.generate(form_data['score'],form_data['branch'],form_data['category'],'myapp/data/pickles/')
             flag = True if len(colleges) != 0 else False
             clgData = CollegeData()
+
             form_data['branch'] = clgData.get_branch_name(form_data['branch'])
             form_data['category'] = clgData.get_category_name(form_data['category'])
             return render(request, 'smart_list.html', {'colleges':colleges, 'flag':flag, 'form_data':form_data})
@@ -60,9 +62,24 @@ def userPreference(request):
 def smartList(request):
     fees = int(request.GET.get('selected_fees'))
     college_list = json.loads(request.GET.get('selected_colleges'))
+    query = request.GET.get('selected_location')
+    distance = int(request.GET.get('selected_distance'))
+
+    # Calculate lat and lng
+    gmaps = googlemaps.Client(key='AIzaSyBP9GSQeqW2m96x4qmg6m71fGAOQIrsJqE')
+    result = gmaps.places(query=query)
+    # print("here")
+    origin_loc = {
+        'lat': result['results'][0]['geometry']['location']['lat'],
+        'lng': result['results'][0]['geometry']['location']['lng']
+    }
+
     clgData = CollegeData()
     new_college_list = []
     for clg in college_list:
-        if clgData.get_fees(clg[2]) <= fees:
+        coll_fees = clgData.get_fees(clg[2])
+        coll_dist, coll_dur = clgData.get_dist_dur(clg[2], origin_loc)
+
+        if coll_fees <= fees and coll_dist <= distance:
             new_college_list.append(clg)
     return HttpResponse(json.dumps(new_college_list))

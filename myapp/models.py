@@ -1,7 +1,11 @@
 from django.db import models
 from django import forms
+import googlemaps
+import json
 
 # Create your models here.
+gmaps = googlemaps.Client(key='AIzaSyAzFFPgX-GryNpheDClG-PpEr1OGuHm6OY')
+
 CATEGORY_CHOICES = (
     ('GOPEN', 'General Open'),
     ('GOBC','General Other Backward Class(OBC)'),
@@ -116,6 +120,38 @@ FEES = {'vjti':83805,
         'vit':136272
     }
 
+LOCATION = (('vjti',19.0222181,72.8561212),
+        ('sp',19.1238086,72.8361388),
+        ('spit',19.1231776,72.8361154),
+        ('ict',19.0239192,72.8575207),
+        ('kjsce',19.072674,72.9006989),
+        ('kjit',19.046146,72.871043),
+        ('vik',19.0453383,72.8889431),
+        ('sa',19.0482157,72.9116581),
+        ('dbit',19.0812532,72.8885961),
+        ('djs',19.1071059,72.8371074),
+        ('fcr',19.044497,72.8204535),
+        ('ss',18.9685103,72.8310249),
+        ('rgit',19.1212761,72.8236961),
+        ('rcr',19.066677,72.8248061),
+        ('bvc',19.0264933,73.0550664),
+        ('dmc',19.160322,72.995568),
+        ('afrc',19.0755127,72.9917043),
+        ('kc',19.1799297,72.9802716),
+        ('kgc',18.9159029,73.343191),
+        ('lti',19.105774,73.0072909),
+        ('mgm',19.0163873,73.1046578),
+        ('pvp',19.0504293,72.8784344),
+        ('pit',18.990201,73.1276701),
+        ('rait',19.0443847,73.0257006),
+        ('jc',19.1979524,73.1082841),
+        ('sies',19.042813,73.023078),
+        ('sfit',19.2435526,72.8557971),
+        ('tec',19.0296489,73.0166693),
+        ('tcet',19.2061342,72.8745324),
+        ('tse',19.0644647,72.8358602),
+        ('vit',19.0215885,72.8707363))
+
 class UserForm(forms.Form):
     name = forms.CharField(max_length=100)
     category = forms.CharField(max_length=15, widget=forms.Select(choices=CATEGORY_CHOICES))
@@ -129,6 +165,7 @@ class PredictCollege(forms.Form):
     category = forms.CharField(max_length=15, widget=forms.Select(choices=CATEGORY_CHOICES))
     score = forms.IntegerField()
     branch = forms.ChoiceField(choices=BRANCH_CHOICES)
+    location = forms.CharField(widget=forms.TextInput(attrs={'class': "autocomplete form-control form-control-sm", 'id': "autocomplete-input"}))
 
 class CollegeData(models.Model):
     def get_branch_name(self, branch_code):
@@ -148,3 +185,15 @@ class CollegeData(models.Model):
         for c in COLLEGE_CHOICES:
             if college_code == c[0]:
                 return c[1]
+
+    def get_dist_dur(self, college_code, origin_loc):
+        for l in LOCATION:
+            if college_code == l[0]:
+                lat = l[1]
+                lng = l[2]
+                destination_loc = {'lat':lat, 'lng':lng}
+                geocode_result = gmaps.distance_matrix(origins=origin_loc,destinations=destination_loc)
+                distance = geocode_result['rows'][0]['elements'][0]['distance']['value']
+                duration = geocode_result['rows'][0]['elements'][0]['duration']['text']
+
+                return distance/1000, duration

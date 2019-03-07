@@ -184,7 +184,7 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-.property-fees > input[type=number] {
+.property > input[type=number] {
     width: 95px;
     height: 32px;
     border: none;
@@ -195,7 +195,7 @@ input:checked + .slider:before {
     text-align: center;
 }
 
-.property-fees {
+.property {
     background-color: #2890ab;
     display: none;
     padding: 10px 10px 10px 20px;
