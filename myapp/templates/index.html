@@ -21,8 +21,8 @@
           </div>
           <ul class="navbar-nav navbar-right">
             <li class="nav-item active"><a class="nav-link" href="#">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'userPreference' %}">Predictor</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'smartList' %}">Filters</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'user_preference' %}">Predictor</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'smart_list' %}">Filters</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Page 3</a></li>
           </ul>
         </div>
@@ -63,18 +63,18 @@
         $("#id_college").change(function () {
           var college = $(this).val();
           $.ajax({
-            url: '{% url "getBranches" %}',
-            data: { 
+            url: '{% url "get_branches" %}',
+            data: {
               csrfmiddlewaretoken: '{{ csrf_token }}',
               college: college
               },
             success: function (response) {
               response = JSON.parse(response);
               $('#id_branch').empty();
-              $.each(response, function(key, value) {   
+              $.each(response, function(key, value) {
                 $('#id_branch')
                 .append($('<option>', { value : value[0] })
-                .text(value[1])); 
+                .text(value[1]));
               });
             }
           });

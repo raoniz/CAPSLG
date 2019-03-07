@@ -74,7 +74,7 @@
                     </a>
                 </li>
                 <li>
-                    <div style="width: fit-content; margin:auto;padding: 15px 0px 0px;">    
+                    <div style="width: fit-content; margin:auto;padding: 15px 0px 0px;">
                         <button class="btn apply-filter dark-button">
                             <i class="fas fa-filter"></i>
                             <span>Apply</span>
@@ -93,7 +93,7 @@
                 </div>
                 <ul class="navbar-nav navbar-right">
                   <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
-                  <li class="nav-item"><a class="nav-link" href="{% url 'userPreference' %}">Predictor</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{% url 'user_preference' %}">Predictor</a></li>
                   <li class="nav-item active"><a class="nav-link" href="#">Filters</a></li>
                   <li class="nav-item"><a class="nav-link" href="#">Page 3</a></li>
                 </ul>
@@ -175,7 +175,7 @@
         function listAnimation() {
             var i = 0;
             var delay_duration = 0.1;
-            var animations = ["fadeInRight","fadeInUp","flipInX","lightSpeedIn","rotateInDownRight","rotateInUpLeft","zoomInDown"];
+            var animations = ["fadeInRight","fadeInUp","flipInX","lightSpeedIn","zoomInDown"]; //,"rotateInDownRight","rotateInUpLeft"
             var animation = "animated " + animations[Math.floor(Math.random() * animations.length)];
             $(".list-group li").each(function(){
                 $(this).css("animation-delay",(delay_duration * i++)+"s");
@@ -211,7 +211,7 @@
                     location_checked = ($("#fees-structure").attr("data-checked") == 'true');
 
                     selected_fees = fees_checked ? $(".fees").val() : $(".slider-fees").attr('max')
-                    
+
                     if(fees_checked || naac_grade_checked || location_checked)
                         apply_filter(selected_fees);
                     else {
@@ -239,7 +239,7 @@
             // }
             $.ajax({
             url: '{% url "apply_filter" %}',
-            data: { 
+            data: {
               "csrfmiddlewaretoken": '{{ csrf_token }}',
               "selected_colleges": JSON.stringify(college_list),
               "selected_fees": selected_fees
@@ -247,7 +247,7 @@
             success: function (response) {
                 $(".list-group").empty();
                 response = JSON.parse(response);
-                $.each(response, function(key, value) {   
+                $.each(response, function(key, value) {
                     $('.list-group')
                     .append('<li class="list-group-item"><span>'+value[0]+'</span><span style="float:right; padding-right: 5%;">Probability: '+ value[1] +'</span></li>');
                 });

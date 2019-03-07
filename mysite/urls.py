@@ -21,8 +21,8 @@ from django.conf.urls import url
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/', views.index, name='index'),
-    path('userPreference/', views.userPreference, name='userPreference'),
-    path('smartList/', views.smartList, name='smartList'),
-    path('getBranches/', views.getBranches, name='getBranches'),
+    path('user_preference/', views.userPreference, name='user_preference'),
+    path('smart_list/', views.smartList, name='smart_list'),
+    path('get_branches/', views.getBranches, name='get_branches'),
     path('apply_filter/', views.smartList, name='apply_filter'),
 ]

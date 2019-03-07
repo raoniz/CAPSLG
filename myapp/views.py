@@ -37,7 +37,7 @@ def getBranches(request):
     college = request.GET.get('college')
     branches = pickle.load(open('myapp/data/pickles/branches.pkl','rb'))
     return HttpResponse(json.dumps(branches[college]))
-    
+
 
 def userPreference(request):
     if request.method == 'POST':
@@ -63,6 +63,6 @@ def smartList(request):
     clgData = CollegeData()
     new_college_list = []
     for clg in college_list:
-        if fees >= clgData.get_fees(clg[2]):
+        if clgData.get_fees(clg[2]) <= fees:
             new_college_list.append(clg)
     return HttpResponse(json.dumps(new_college_list))
