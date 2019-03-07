@@ -201,12 +201,12 @@ input:checked + .slider:before {
     padding: 10px 10px 10px 20px;
 }
 
-.apply-filter {
+.dark-button {
     background-color: #0e7e9b;
     color: white;
 }
 
-.apply-filter:hover {
+.dark-button:hover {
     box-shadow: 1px 2px 12px -2px #025b72;
 }
 /* ---------------------------------------------------
@@ -292,3 +292,40 @@ input:checked + .slider:before {
   margin-top: 5%;
 }
 
+
+
+/* ---------------------------------------------------
+    STUDENT INFORMATION
+----------------------------------------------------- */
+
+.student-info {
+  padding: 15px;
+  box-shadow: 3px 2px 25px -6px #013643;
+  border-radius: 10px;
+  font-size: large;
+  background: #4db9d7;
+  color: white;
+}
+
+.student-info > h3 {
+  text-align: center;
+  padding: 6px 1px 0px 1px;
+}
+
+.row {
+  padding: 5px 3px;
+}
+
+.col-sm-4 {
+  text-align: center;
+}
+
+hr {
+  background-image: radial-gradient(white, #ffffff82, #0000ff00);;
+  border: 0;
+  height: 1px;
+}
+
+.student-info  span {
+  font-weight: 700;
+}

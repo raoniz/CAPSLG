@@ -36,20 +36,6 @@
             </div>
 
             <ul class="list-unstyled components">
-                <!-- <li>
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Filter 1</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li>
-                            <a href="#">Category 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Category 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Category 3</a>
-                        </li>
-                    </ul>
-                </li> -->
                 <li>
                     <a>
                         <span>Fees Structure</span>
@@ -89,7 +75,7 @@
                 </li>
                 <li>
                     <div style="width: fit-content; margin:auto;padding: 15px 0px 0px;">    
-                        <button class="btn apply-filter">
+                        <button class="btn apply-filter dark-button">
                             <i class="fas fa-filter"></i>
                             <span>Apply</span>
                         </button>
@@ -120,6 +106,24 @@
             <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fas fa-align-justify"></i>
             </button>
+
+            <!-- student info panel -->
+            <div class="student-info">
+            	<h3>Student Informtaion</h3>
+            	<hr>
+	            <div class="row">
+	            	<div class="col-sm-4"><span>Name:</span> {{form_data.name}}</div>
+	            	<div class="col-sm-4"><span>Branch:</span> {{form_data.branch}}</div>
+	            	<div class="col-sm-4"><span>Score:</span> {{form_data.score}}</div>
+	            </div>
+	            <div class="row">
+	            	<div class="col-sm-4"><span>Category:</span> {{form_data.category}}</div>
+	            	<div class="col-sm-4"><span>Location:</span> {{form_data.name}}</div>
+	            	<div class="col-sm-4">
+	            		<button class="btn dark-button"><i class="fa fa-edit"></i> Edit choice</button>
+	            	</div>
+	            </div>
+	        </div>
 
             <!-- List of colleges -->
             {% if flag %}
