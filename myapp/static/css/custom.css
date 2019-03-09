@@ -447,3 +447,15 @@ button[disabled] {
     transform: translate(19px, 0);
   }
 }
+
+/* ---------------------------------------------------
+    LIST ACTIONS
+----------------------------------------------------- */
+
+.list-action {
+  margin-top: 25px;
+}
+
+.list-action .col-sm-3 {
+  text-align: center;
+}

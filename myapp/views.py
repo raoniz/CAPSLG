@@ -62,14 +62,14 @@ def smartList(request):
     college_list = json.loads(request.GET.get('selected_colleges'))
     query = request.GET.get('selected_location')
     distance = int(request.GET.get('selected_distance'))
-
+    grade = int(request.GET.get('selected_grade'))
     origin_loc = CollegeData.get_lat_lng(query);
 
     new_college_list = []
     for clg in college_list:
         coll_fees = CollegeData.get_fees(clg[7])
         coll_dist, coll_dur = CollegeData.get_dist_dur(clg[7], origin_loc)
-
-        if coll_fees <= fees and coll_dist <= distance:
+        coll_grade = CollegeData.get_grade(clg[7])
+        if coll_fees <= fees and coll_dist <= distance and coll_grade >= grade:
             new_college_list.append(clg)
     return HttpResponse(json.dumps(new_college_list))

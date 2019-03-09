@@ -21,5 +21,5 @@ def main(filename, test):
     # return 100
 
 if __name__ == '__main__':
-    # print(main('../data/pickles/colleges/vjti.pkl', np.array(input('Enter test data: ').strip().split(' '))))
-    print(selected('../data/pickles/colleges/vjti.pkl', np.array(['2019','IT','GOPEN','180'])))
+    print(main('../data/pickles/colleges/vjti.pkl', np.array(['2019','IT','GOPEN','180'])))
+    # print(selected('../data/pickles/colleges/vjti.pkl', np.array(['2019','IT','GOPEN','180'])))

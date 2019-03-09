@@ -187,6 +187,38 @@ LOCATION_NAME = {'vjti':'Matunga',
                 'tse':'Bandra',
                 'vit':'Wadala'}
 
+GRADES = {'vjti':9,
+            'sp':7,
+            'spit':7,
+            'ict':9,
+            'kjsce':7,
+            'kjit':7,
+            'vik':7,
+            'sa':5,
+            'dbit':6,
+            'djs':7,
+            'fcr':5,
+            'ss':5,
+            'rgit':5,
+            'rcr':6,
+            'bvc':6,
+            'dmc':5,
+            'afrc':5,
+            'kc':5,
+            'kgc':4,
+            'lti':6,
+            'mgm':6,
+            'pvp':5,
+            'pit':5,
+            'rait':7,
+            'jc':5,
+            'sies':6,
+            'sfit':6,
+            'tec':7,
+            'tcet':7,
+            'tse':6,
+            'vit':5}
+
 
 class UserForm(forms.Form):
     name = forms.CharField(max_length=100)
@@ -253,4 +285,4 @@ class CollegeData(models.Model):
 
     @staticmethod
     def get_grade(college_code):
-        return 5
+        return GRADES[college_code]
