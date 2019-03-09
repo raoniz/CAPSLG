@@ -94,7 +94,7 @@
                         		<div></div>
                         	</div>
                         	<div class="apply-filter-text">
-	                            <i class="fas fa-filter"></i>
+	                            <i class="fas fa-filter"></u></i>
 	                            <span>Apply</span>
 	                        </div>
                         </button>
@@ -117,11 +117,11 @@
               </div>
             </nav>
            <!--  <button type="button" id="sidebarCollapse" class="btn btn-info">
-                <i class="fas fa-filter"></i>
+                <i class="fas fa-filter"></u></i>
                 <span>Add filters</span>
             </button> -->
             <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fas fa-align-justify"></i>
+                <i class="fas fa-align-justify"></u></i>
             </button>
 
             <!-- student info panel -->
@@ -138,7 +138,7 @@
 	            	<div class="col-sm-4"><span>Location:</span> {{form_data.location}}</div>
 	            	<div class="col-sm-4">
 	            		<button class="btn dark-button">
-	            			<i class="fa fa-edit"></i> 
+	            			<i class="fa fa-edit"></u></i> 
 	            			Edit choice
 	            		</button>
 	            	</div>
@@ -149,8 +149,8 @@
 	        	<div class="row">
 	        		<div class="col-sm-9"></div>
 	        		<div class="col-sm-3">
-	        			<button class="btn dark-button">
-	        				<i class="fa fa-edit"></i> 
+	        			<button class="btn dark-button expand-all" data-expand="true">
+	        				<i class="fa fa-caret-down"></u></i> 
 	        				Expand all
 	        			</button>
 	        		</div>
@@ -171,11 +171,11 @@
 	                </div>
                     <div id="{{ i.7 }}" class="college-info collapse">
                     	<div class="row">
-                    		<div class="col-sm-2">Fees: {{i.2}}</div>
-                    		<div class="col-sm-2 col-half-offset">Location: {{i.4}}</div>
-                    		<div class="col-sm-2 col-half-offset">Distance: {{i.5}} Km</div>
-                    		<div class="col-sm-2 col-half-offset">Duration: {{i.6}}</div>
-                    		<div class="col-sm-2 col-half-offset">Grade: {{i.3}}*</div>
+                    		<div class="col-sm-2"><i><u>Fees:</u></i> {{i.2}}</div>
+                    		<div class="col-sm-2 col-half-offset"><i><u>Location:</u></i> {{i.4}}</div>
+                    		<div class="col-sm-2 col-half-offset"><i><u>Distance:</u></i> {{i.5}} Km</div>
+                    		<div class="col-sm-2 col-half-offset"><i><u>Duration:</u></i> {{i.6}}</div>
+                    		<div class="col-sm-2 col-half-offset"><i><u>Grade:</u></i> {{i.3}}*</div>
                     	</div>
                     </div>
                 </li>
@@ -318,15 +318,15 @@
 	                	element += 'Probability: ' + value[1];
 	                	element += '</span>';
 	                	element += '<div id="' + value[7] + '" class="college-info collapse"><div class="row"><div class="col-sm-2">';
-	                	element += 'Fees: ' + value[2];
+	                	element += '<i><u>Fees:</u></i> ' + value[2];
 	                	element += '</div><div class="col-sm-2 col-half-offset">';
-	                	element += 'Location: ' + value[4];
+	                	element += '<i><u>Location:</u></i> ' + value[4];
 	                	element += '</div><div class="col-sm-2 col-half-offset">';
-	                	element += 'Distance: ' + value[5] + ' Km';
+	                	element += '<i><u>Distance:</u></i> ' + value[5] + ' Km';
 	                	element += '</div><div class="col-sm-2 col-half-offset">';
-	                	element += 'Duration: ' + value[6];
+	                	element += '<i><u>Duration:</u></i> ' + value[6];
 	                	element += '</div><div class="col-sm-2 col-half-offset">'
-	                	element += 'Grade: ' + value[3] + '*</div></div></div></li>';
+	                	element += '<i><u>Grade:</u></i> ' + value[3] + '*</div></div></div></li>';
 	                    $('.list-group').append(element);
 	                });
 	                listAnimation();
@@ -351,7 +351,33 @@
         	return element_count;
         }
 
+        $(function(){
+        	$(".expand-all").click(function(){
+        		let list = $(".list-group li");
+    			let college_info = $(".list-group .college-info");
+        		if($(this).attr("data-expand") == "true"){
+        			$(this).attr("data-expand","false")
+        			$(this).empty();
+        			$(this).append('<i class="fa fa-caret-up"></u></i>	        				Collapse all');
+  
+        			list.each(function(key,value){
+        				if(!($(college_info[key]).hasClass("show"))){
+        					$(value).click();
+        				}
+        			});
+        		} else {
+        			$(this).attr("data-expand","true")
+        			$(this).empty();
+        			$(this).append('<i class="fa fa-caret-down"></u></i>	        				Expand all');
 
+        			list.each(function(key,value){
+        				if($(college_info[key]).hasClass("show")){
+        					$(value).click();
+        				}
+        			});
+        		}
+        	});
+        });
 
     </script>
 </body>

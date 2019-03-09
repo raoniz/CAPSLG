@@ -371,6 +371,9 @@ hr {
   padding: 10px 0px 0px 0px;
 }
 
+i {
+  font-size: large;
+}
 
 .college-info hr {
   background: #a2a2a278;
@@ -452,10 +455,10 @@ button[disabled] {
     LIST ACTIONS
 ----------------------------------------------------- */
 
-.list-action {
+.list-actions {
   margin-top: 25px;
 }
 
-.list-action .col-sm-3 {
+.list-actions .col-sm-3 {
   text-align: center;
 }
