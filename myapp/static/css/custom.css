@@ -242,7 +242,8 @@ input:checked + .slider:before {
     height: fit-content;
     font-size: larger;
     padding: 18px;
-    box-shadow: 5px 3px 15px 0px #bebebe;
+    box-shadow: 5px 3px 15px -1px #bebebe;
+    background-color: #4ab0cd1f;
     transition: all 0.17s cubic-bezier(0.57, -0.03, 0.5, 1) !important;
     cursor: pointer;
 }
@@ -256,6 +257,36 @@ input:checked + .slider:before {
     font-size: x-large;
     color: #f26350;
     margin-top: 50px;
+}
+
+/* ---------------------------------------------------
+    LIST OF COLLEGES LOADER
+----------------------------------------------------- */
+
+.list-loader {
+  display: inline-block;
+  margin: 30px auto;
+  width: fit-content;
+  height: fit-content;
+}
+.list-loader:after {
+  content: " ";
+  display: block;
+  width: 60px;
+  height: 60px;
+  margin: 1px;
+  border-radius: 50%;
+  border: 5px solid #fff;
+  border-color: #2890ab #4db9d721 #2890ab #4db9d721;
+  animation: list-loader 1.2s linear infinite;
+}
+@keyframes list-loader {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* ---------------------------------------------------
@@ -328,4 +359,91 @@ hr {
 
 .student-info  span {
   font-weight: 700;
+}
+
+/* ---------------------------------------------------
+    COLLEGE INFORMATION
+----------------------------------------------------- */
+
+.college-info {
+  border-top: 2px solid #2890abcc;
+  margin: 45px 0px 5px 0px;
+  padding: 10px 0px 0px 0px;
+}
+
+
+.college-info hr {
+  background: #a2a2a278;
+  width: 97%;
+  border: 0;
+  height: 1px;
+}
+
+.college-info .col-half-offset {
+  margin-left:4.166666667%;
+}
+
+
+/* ---------------------------------------------------
+    FILTER BUTTON && LOADER
+----------------------------------------------------- */
+
+button[disabled] {
+  cursor: wait;
+}
+
+.apply-filter-loader {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 15px;
+}
+.apply-filter-loader div {
+  position: absolute;
+  top: 5px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #fff;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.apply-filter-loader div:nth-child(1) {
+  left: 6px;
+  animation: apply-filter-loader1 0.6s infinite;
+}
+.apply-filter-loader div:nth-child(2) {
+  left: 6px;
+  animation: apply-filter-loader2 0.6s infinite;
+}
+.apply-filter-loader div:nth-child(3) {
+  left: 26px;
+  animation: apply-filter-loader2 0.6s infinite;
+}
+.apply-filter-loader div:nth-child(4) {
+  left: 45px;
+  animation: apply-filter-loader3 0.6s infinite;
+}
+@keyframes apply-filter-loader1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes apply-filter-loader3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes apply-filter-loader2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(19px, 0);
+  }
 }

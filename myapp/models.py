@@ -3,8 +3,11 @@ from django import forms
 import googlemaps
 import json
 
-# Create your models here.
-gmaps = googlemaps.Client(key='AIzaSyAzFFPgX-GryNpheDClG-PpEr1OGuHm6OY')
+# Google API object for distance matrix
+gmaps_dm = googlemaps.Client(key='AIzaSyAzFFPgX-GryNpheDClG-PpEr1OGuHm6OY')
+
+# Google API object for places
+gmaps_p = googlemaps.Client(key='AIzaSyBP9GSQeqW2m96x4qmg6m71fGAOQIrsJqE')
 
 CATEGORY_CHOICES = (
     ('GOPEN', 'General Open'),
@@ -152,6 +155,39 @@ LOCATION = (('vjti',19.0222181,72.8561212),
         ('tse',19.0644647,72.8358602),
         ('vit',19.0215885,72.8707363))
 
+LOCATION_NAME = {'vjti':'Matunga',
+                'sp':'Andheri',
+                'spit':'Andheri',
+                'ict':'Matunga',
+                'kjsce':'Vidyavihar',
+                'kjit':'Sion',
+                'vik':'Chembur',
+                'sa':'Chembur',
+                'dbit':'Kurla',
+                'djs':'Vile parle',
+                'fcr':'Bandra',
+                'ss':'Byculla',
+                'rgit':'Andheri',
+                'rcr':'Bandra',
+                'bvc':'Belapur',
+                'dmc':'Airoli',
+                'afrc':'Vashi',
+                'kc':'Thane',
+                'kgc':'Karjat',
+                'lti':'Kopar Khairne',
+                'mgm':'Kamothe',
+                'pvp':'Sion',
+                'pit':'Panvel',
+                'rait':'Nerul',
+                'jc':'Dombivali',
+                'sies':'Nerul',
+                'sfit':'Borivali',
+                'tec':'Nerul',
+                'tcet':'Kandivali',
+                'tse':'Bandra',
+                'vit':'Wadala'}
+
+
 class UserForm(forms.Form):
     name = forms.CharField(max_length=100)
     category = forms.CharField(max_length=15, widget=forms.Select(choices=CATEGORY_CHOICES))
@@ -165,35 +201,56 @@ class PredictCollege(forms.Form):
     category = forms.CharField(max_length=15, widget=forms.Select(choices=CATEGORY_CHOICES))
     score = forms.IntegerField()
     branch = forms.ChoiceField(choices=BRANCH_CHOICES)
-    location = forms.CharField(widget=forms.TextInput(attrs={'class': "autocomplete form-control form-control-sm", 'id': "autocomplete-input"}))
+    location = forms.CharField(widget=forms.TextInput(attrs={'class': "autocomplete form-control", 'id': "autocomplete-input"}))
 
 class CollegeData(models.Model):
-    def get_branch_name(self, branch_code):
+    @staticmethod
+    def get_branch_name(branch_code):
         for b in BRANCH_CHOICES:
             if branch_code == b[0]:
                 return b[1]
 
-    def get_category_name(self, category_code):
+    @staticmethod
+    def get_category_name(category_code):
         for c in CATEGORY_CHOICES:
             if category_code == c[0]:
                 return c[1]
 
-    def get_fees(self, college_code):
+    @staticmethod
+    def get_fees(college_code):
         return FEES[college_code]
 
-    def get_college_name(self, college_code):
+    @staticmethod
+    def get_college_name(college_code):
         for c in COLLEGE_CHOICES:
             if college_code == c[0]:
                 return c[1]
 
-    def get_dist_dur(self, college_code, origin_loc):
+    @staticmethod
+    def get_dist_dur(college_code, origin_loc):
         for l in LOCATION:
             if college_code == l[0]:
                 lat = l[1]
                 lng = l[2]
                 destination_loc = {'lat':lat, 'lng':lng}
-                geocode_result = gmaps.distance_matrix(origins=origin_loc,destinations=destination_loc)
+                geocode_result = gmaps_dm.distance_matrix(origins=origin_loc,destinations=destination_loc)
                 distance = geocode_result['rows'][0]['elements'][0]['distance']['value']
                 duration = geocode_result['rows'][0]['elements'][0]['duration']['text']
-
                 return distance/1000, duration
+
+    @staticmethod
+    def get_lat_lng(query):
+        result = gmaps_p.places(query=query)
+            # print("here")
+        return {
+            'lat': result['results'][0]['geometry']['location']['lat'],
+            'lng': result['results'][0]['geometry']['location']['lng']
+        }
+
+    @staticmethod
+    def get_location_name(college_code):
+        return LOCATION_NAME[college_code]
+
+    @staticmethod
+    def get_grade(college_code):
+        return 5

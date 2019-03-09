@@ -22,9 +22,8 @@ def index(request):
             filename = 'myapp/data/pickles/colleges/' + form_data['college'] + '.pkl'
             test = np.array([2019, form_data['branch'], form_data['category'], form_data['score']])
             form_data['probability'] = predict_proba.main(filename, test)
-            clgData = CollegeData()
-            form_data['college'] = clgData.get_college_name(form_data['college'])
-            form_data['category'] = clgData.get_category_name(form_data['category'])
+            form_data['college'] = CollegeData.get_college_name(form_data['college'])
+            form_data['category'] = CollegeData.get_category_name(form_data['category'])
             # redirect to a new URL:
             # return HttpResponseRedirect('/index/')
             return render(request, 'index.html', {'form': form, 'form_data': form_data, 'flag': flag})
@@ -48,12 +47,11 @@ def userPreference(request):
         if form.is_valid():
             form_data = flatten_to_dict(form)
             # collect college list according to the seleted criteria
-            colleges = generate_list.generate(form_data['score'],form_data['branch'],form_data['category'],'myapp/data/pickles/')
+            colleges = generate_list.generate(form_data['score'],form_data['branch'],form_data['category'],form_data['location'],'myapp/data/pickles/')
             flag = True if len(colleges) != 0 else False
-            clgData = CollegeData()
 
-            form_data['branch'] = clgData.get_branch_name(form_data['branch'])
-            form_data['category'] = clgData.get_category_name(form_data['category'])
+            form_data['branch'] = CollegeData.get_branch_name(form_data['branch'])
+            form_data['category'] = CollegeData.get_category_name(form_data['category'])
             return render(request, 'smart_list.html', {'colleges':colleges, 'flag':flag, 'form_data':form_data})
     else:
         form = PredictCollege()
@@ -65,20 +63,12 @@ def smartList(request):
     query = request.GET.get('selected_location')
     distance = int(request.GET.get('selected_distance'))
 
-    # Calculate lat and lng
-    gmaps = googlemaps.Client(key='AIzaSyBP9GSQeqW2m96x4qmg6m71fGAOQIrsJqE')
-    result = gmaps.places(query=query)
-    # print("here")
-    origin_loc = {
-        'lat': result['results'][0]['geometry']['location']['lat'],
-        'lng': result['results'][0]['geometry']['location']['lng']
-    }
+    origin_loc = CollegeData.get_lat_lng(query);
 
-    clgData = CollegeData()
     new_college_list = []
     for clg in college_list:
-        coll_fees = clgData.get_fees(clg[2])
-        coll_dist, coll_dur = clgData.get_dist_dur(clg[2], origin_loc)
+        coll_fees = CollegeData.get_fees(clg[7])
+        coll_dist, coll_dur = CollegeData.get_dist_dur(clg[7], origin_loc)
 
         if coll_fees <= fees and coll_dist <= distance:
             new_college_list.append(clg)

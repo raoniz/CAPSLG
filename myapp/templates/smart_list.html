@@ -53,14 +53,20 @@
                     </div>
                 </li>
                 <li>
-                    <a>NAAC Grade
+                    <a>Review Grade
                         <span style="float:right;">
                             <label class="switch">
-                              <input type="checkbox" id="naac-grade" data-checked="false">
+                              <input type="checkbox" id="review-grade" data-checked="false">
                               <span class="slider round"></span>
                             </label>
                         </span>
                     </a>
+                    <div id="grade-drop" class="property">
+                        <span>Grades (1:Low 9:Heigh)</span>
+                        <input type="number" name="review-grade" class="review-grade" disabled="disabled" value="6">
+                        <!-- <div style="float: right;">Lac</div> -->
+                        <input class="slider-review-grade custom-range" type="range" min="0" max="9" step="1" value="6">
+                    </div>
                 </li>
                 <li>
                     <a>Location
@@ -81,8 +87,16 @@
                 <li>
                     <div style="width: fit-content; margin:auto;padding: 15px 0px 0px;">
                         <button class="btn apply-filter dark-button">
-                            <i class="fas fa-filter"></i>
-                            <span>Apply</span>
+                        	<div class="apply-filter-loader" style="display: none">
+                        		<div></div>
+                        		<div></div>
+                        		<div></div>
+                        		<div></div>
+                        	</div>
+                        	<div class="apply-filter-text">
+	                            <i class="fas fa-filter"></i>
+	                            <span>Apply</span>
+	                        </div>
                         </button>
                     </div>
                 </li>
@@ -98,9 +112,7 @@
                 </div>
                 <ul class="navbar-nav navbar-right">
                   <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
-                  <li class="nav-item"><a class="nav-link" href="{% url 'user_preference' %}">Predictor</a></li>
-                  <li class="nav-item active"><a class="nav-link" href="#">Filters</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#">Page 3</a></li>
+                  <li class="nav-item active"><a class="nav-link" href="{% url 'user_preference' %}">Predictor</a></li>
                 </ul>
               </div>
             </nav>
@@ -135,12 +147,30 @@
             <div class="card list-of-college">
               <ul class="list-group list-group-flush">
                 {% for i in colleges %}
-                <li class="list-group-item">
-                    <span>{{ i.0 }}</span>
-                    <span style="float:right; padding-right: 5%;">Probability: {{ i.1 }}</span>
+                <li class="list-group-item" data-toggle="collapse" data-target="#{{ i.7 }}">
+                	<div>
+	                    <span>{{ i.0 }}</span>
+	                    <span style="float:right; padding-right: 5%;">
+		                    Probability: {{ i.1 }}
+	                	</span>
+	                </div>
+                    <div id="{{ i.7 }}" class="college-info collapse">
+                    	<div class="row">
+                    		<div class="col-sm-2">Fees: {{i.2}}</div>
+                    		<div class="col-sm-2 col-half-offset">Location: {{i.4}}</div>
+                    		<div class="col-sm-2 col-half-offset">Distance: {{i.5}} Km</div>
+                    		<div class="col-sm-2 col-half-offset">Duration: {{i.6}}</div>
+                    		<div class="col-sm-2 col-half-offset">Grade: {{i.3}}*</div>
+                    	</div>
+                    </div>
                 </li>
+
                 {% endfor %}
               </ul>
+              <div class="list-loader" style="display: none"></div>
+              <div class="not-eligible none-filter" style="display: none">
+              	Oops, There are no colleges that matches the applied filters!
+              </div>
             </div>
             <script type="text/javascript"> var college_list = {{ colleges|safe }}; </script>
 
@@ -191,9 +221,10 @@
                 $(".fees").val($(this).val());
             });
 
-            $("#naac-grade").change(function(){
+            $("#review-grade").change(function(){
                 var flag = ($(this).attr("data-checked")=="false") ? "true" : "false";
                 $(this).attr("data-checked",flag);
+                $('#grade-drop').slideToggle();
             })
 
             $("#location").change(function(){
@@ -210,7 +241,7 @@
             $(".apply-filter").click(function(){
                 if(college_list) {
                     fees_checked = ($("#fees-structure").attr("data-checked") == 'true');
-                    naac_grade_checked = ($("#naac-grade").attr("data-checked") == 'true');
+                    naac_grade_checked = ($("#review-grade").attr("data-checked") == 'true');
                     location_checked = ($("#location").attr("data-checked") == 'true');
 
                     selected_fees = fees_checked ? $(".fees").val() : $(".slider-fees").attr('max');
@@ -219,6 +250,12 @@
 
                     if(fees_checked || naac_grade_checked || location_checked) {
                         apply_filter(selected_fees, selected_location, selected_distance);
+                        $(".none-filter").css('display','none');
+                        $(".apply-filter-text").css("display","none");
+                        $(".apply-filter-loader").css("display","inline-block");
+                        $(".apply-filter").attr("disabled","true");
+                        $(".list-group").empty();
+                        $(".list-loader").css("display","inline-block");
                     }
                     else {
                         $(".apply-filter").addClass("animated shake");
@@ -237,11 +274,6 @@
         });
 
         function apply_filter(selected_fees, selected_location, selected_distance){
-            // college_codes = [];
-            // for (var i = college_list.length - 1; i >= 0; i--) {
-            //     college_codes.push(college_list[i][2]);
-            // }
-            console.log(selected_location);
             $.ajax({
             url: '{% url "smart_list" %}',
             data: {
@@ -252,13 +284,34 @@
               "selected_location": selected_location
               },
             success: function (response) {
-                $(".list-group").empty();
+                $(".apply-filter-loader").css("display","none");
+                $(".apply-filter-text").css("display","inline-block");
+                $(".list-loader").css("display","none");
+                $(".apply-filter").prop("disabled",false);
                 response = JSON.parse(response);
-                $.each(response, function(key, value) {
-                    $('.list-group')
-                    .append('<li class="list-group-item"><span>'+value[0]+'</span><span style="float:right; padding-right: 5%;">Probability: '+ value[1] +'</span></li>');
-                });
-                listAnimation();
+                if(lengthOfObject(response) > 0) {
+	                $.each(response, function(key, value) {
+	                	element = '<li class="list-group-item" data-toggle="collapse" data-target="#' + value[7] + '">';
+	                	element += '<span>' + value[0] + '</span>';
+	                	element += '<span style="float:right; padding-right: 5%;">';
+	                	element += 'Probability: ' + value[1];
+	                	element += '</span>';
+	                	element += '<div id="' + value[7] + '" class="college-info collapse"><div class="row"><div class="col-sm-2">';
+	                	element += 'Fees: ' + value[2];
+	                	element += '</div><div class="col-sm-2 col-half-offset">';
+	                	element += 'Location: ' + value[4];
+	                	element += '</div><div class="col-sm-2 col-half-offset">';
+	                	element += 'Distance: ' + value[5] + ' Km';
+	                	element += '</div><div class="col-sm-2 col-half-offset">';
+	                	element += 'Duration: ' + value[6];
+	                	element += '</div><div class="col-sm-2 col-half-offset">'
+	                	element += 'Grade: ' + value[3] + '*</div></div></div></li>';
+	                    $('.list-group').append(element);
+	                });
+	                listAnimation();
+	            } else {
+	            	$(".none-filter").css('display','block');
+	            }
               // console.log(response);
             }, error: function(response, status, exception) {
               console.log("Response: " + response);
@@ -266,6 +319,15 @@
               console.log("Exception: " + exception);
             }
           });
+        }
+
+        function lengthOfObject(object){
+        	element_count = 0;
+        	for(var p in object){
+        		if(object.hasOwnProperty(p))
+			        element_count++;
+        	}
+        	return element_count;
         }
 
 

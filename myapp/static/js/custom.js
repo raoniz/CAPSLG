@@ -47,7 +47,7 @@ function initMap() {
 function listAnimation() {
     var i = 0;
     var delay_duration = 0.1;
-    var animations = ["fadeInRight","fadeInUp","flipInX","lightSpeedIn","zoomInDown"]; //,"rotateInDownRight","rotateInUpLeft"
+    var animations = ["fadeInRight","fadeInUp","flipInX","lightSpeedIn","zoomInDown","rotateInDownRight","rotateInUpLeft"];
     var animation = "animated " + animations[Math.floor(Math.random() * animations.length)];
     $(".list-group li").each(function(){
         $(this).css("animation-delay",(delay_duration * i++)+"s");
