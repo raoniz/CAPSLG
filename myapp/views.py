@@ -7,7 +7,7 @@ import pickle
 import googlemaps
 import json
 
-from .models import UserForm, PredictCollege, CollegeData
+from .models import UserForm, PredictCollege, CollegeData, ExportPdf
 
 def index(request):
     flag = False
@@ -72,3 +72,13 @@ def smartList(request):
         if coll_fees <= fees and coll_dist <= distance and coll_grade >= grade:
             new_college_list.append(clg)
     return HttpResponse(json.dumps(new_college_list))
+
+def export_pdf(request):
+    colleges = json.loads(request.GET.get('selected_colleges'))
+    form_data = json.loads(request.GET.get('form_data'))
+    flag = True if len(colleges) != 0 else False
+    pdf, response = ExportPdf.export(colleges,form_data,flag)
+    if not pdf.err:
+        return HttpResponse(response.getvalue(), content_type='application/pdf')
+    else:
+        return HttpResponse("Error Rendering PDF", status=400)

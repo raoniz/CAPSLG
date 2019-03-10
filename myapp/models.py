@@ -1,6 +1,9 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django import forms
+from django.template.loader import get_template
+from io import BytesIO
+import xhtml2pdf.pisa as pisa
 import googlemaps
 import json
 import pickle
@@ -281,3 +284,13 @@ class CollegeData(models.Model):
     def get_branch(college_code):
         branches = pickle.load(open('myapp/data/pickles/branches.pkl','rb'))
         return branches[college_code]
+
+
+class ExportPdf(models.Model):
+    @staticmethod
+    def export(colleges,form_data,flag):
+        template = get_template("export_pdf.html")
+        html = template.render({'colleges':colleges, 'flag':flag, 'form_data':form_data})
+        response = BytesIO()
+        pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), response)
+        return pdf, response

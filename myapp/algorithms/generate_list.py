@@ -3,6 +3,7 @@ import numpy as np
 from . import predict_proba
 from .. models import CollegeData
 import googlemaps
+from random  import *
 
 # all college list
 urls = ["vjti","sp","spit","ict","kjsce","kjit","vik","sa","dbit","djs","fcr","ss","rgit","rcr","bvc","dmc","afrc","kc","kgc","ltc","mgm","pvp","pit","rait","jc","sies","sfit","tec","tcet","tse","vit"]
@@ -21,7 +22,6 @@ def generate(score,branch,category,location,path):
 			if predict_proba.selected(path + 'colleges/' + url + '.pkl', test.copy()):
 				probability = '{0:.4f}'.format(predict_proba.main(path + 'colleges/' + url + '.pkl', test.copy()))
 				distance, duration = CollegeData.get_dist_dur(url, origin_loc)
-				# distance, duration = 0,0
 				combination = [CollegeData.get_college_name(url),
                                 probability,
                                 CollegeData.get_fees(url),

@@ -395,13 +395,13 @@ button[disabled] {
   cursor: wait;
 }
 
-.apply-filter-loader {
+.button-loader {
   display: inline-block;
   position: relative;
   width: 64px;
   height: 15px;
 }
-.apply-filter-loader div {
+.button-loader div {
   position: absolute;
   top: 5px;
   width: 11px;
@@ -410,23 +410,23 @@ button[disabled] {
   background: #fff;
   animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
-.apply-filter-loader div:nth-child(1) {
+.button-loader div:nth-child(1) {
   left: 6px;
-  animation: apply-filter-loader1 0.6s infinite;
+  animation: button-loader1 0.6s infinite;
 }
-.apply-filter-loader div:nth-child(2) {
+.button-loader div:nth-child(2) {
   left: 6px;
-  animation: apply-filter-loader2 0.6s infinite;
+  animation: button-loader2 0.6s infinite;
 }
-.apply-filter-loader div:nth-child(3) {
+.button-loader div:nth-child(3) {
   left: 26px;
-  animation: apply-filter-loader2 0.6s infinite;
+  animation: button-loader2 0.6s infinite;
 }
-.apply-filter-loader div:nth-child(4) {
+.button-loader div:nth-child(4) {
   left: 45px;
-  animation: apply-filter-loader3 0.6s infinite;
+  animation: button-loader3 0.6s infinite;
 }
-@keyframes apply-filter-loader1 {
+@keyframes button-loader1 {
   0% {
     transform: scale(0);
   }
@@ -434,7 +434,7 @@ button[disabled] {
     transform: scale(1);
   }
 }
-@keyframes apply-filter-loader3 {
+@keyframes button-loader3 {
   0% {
     transform: scale(1);
   }
@@ -442,7 +442,7 @@ button[disabled] {
     transform: scale(0);
   }
 }
-@keyframes apply-filter-loader2 {
+@keyframes button-loader2 {
   0% {
     transform: translate(0, 0);
   }
