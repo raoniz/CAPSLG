@@ -22,15 +22,13 @@
           <ul class="navbar-nav navbar-right">
             <li class="nav-item active"><a class="nav-link" href="#">Home</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'user_preference' %}">Predictor</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'smart_list' %}">Filters</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Page 3</a></li>
           </ul>
         </div>
       </nav>
 
       {% if flag %}
         <div class="card bg-info text-white container-fluid form-container">
-          <div class="card-body">Hello, <strong>{{form_data.name}}!</strong> Your probability to secure admission in <strong>{{form_data.college}}</strong> under <strong>{{form_data.category}}</strong> quota is <strong>{{form_data.probability}}</strong></div>
+          <div class="card-body">Hello, <strong><i>{{form_data.name}}!</i></strong> Your probability to secure admission in <strong><i>{{form_data.college}}</i></strong> for <strong><i>{{form_data.branch}}</i></strong> branch under <strong><i>{{form_data.category}}</i></strong> quota is <strong><i><u>{{form_data.probability}}</u></i></strong></div>
         </div>
       {% endif %}
 
@@ -59,27 +57,35 @@
 
 <!-- // get branches dynamically according to selected college. -->
     <script type="text/javascript">
+
       $(function(){
+
+        get_branches($("#id_college").val());
+
         $("#id_college").change(function () {
           var college = $(this).val();
-          $.ajax({
-            url: '{% url "get_branches" %}',
-            data: {
-              csrfmiddlewaretoken: '{{ csrf_token }}',
-              college: college
-              },
-            success: function (response) {
-              response = JSON.parse(response);
-              $('#id_branch').empty();
-              $.each(response, function(key, value) {
-                $('#id_branch')
-                .append($('<option>', { value : value[0] })
-                .text(value[1]));
-              });
-            }
-          });
+          get_branches(college);
         });
       });
+
+      function get_branches(college) {
+        $.ajax({
+          url: '{% url "get_branches" %}',
+          data: {
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            college: college
+            },
+          success: function (response) {
+            response = JSON.parse(response);
+            $('#id_branch').empty();
+            $.each(response, function(key, value) {
+              $('#id_branch')
+              .append($('<option>', { value : value[0] })
+              .text(value[1]));
+            });
+          }
+        });
+      }
     </script>
 
   </body>

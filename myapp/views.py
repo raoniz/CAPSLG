@@ -22,6 +22,7 @@ def index(request):
             filename = 'myapp/data/pickles/colleges/' + form_data['college'] + '.pkl'
             test = np.array([2019, form_data['branch'], form_data['category'], form_data['score']])
             form_data['probability'] = predict_proba.main(filename, test)
+            form_data['branch'] = CollegeData.get_branch_name(form_data['branch'])
             form_data['college'] = CollegeData.get_college_name(form_data['college'])
             form_data['category'] = CollegeData.get_category_name(form_data['category'])
             # redirect to a new URL:
@@ -35,8 +36,7 @@ def index(request):
 
 def getBranches(request):
     college = request.GET.get('college')
-    branches = pickle.load(open('myapp/data/pickles/branches.pkl','rb'))
-    return HttpResponse(json.dumps(branches[college]))
+    return HttpResponse(json.dumps(CollegeData.get_branch(college)))
 
 
 def userPreference(request):
@@ -60,15 +60,14 @@ def userPreference(request):
 def smartList(request):
     fees = int(request.GET.get('selected_fees'))
     college_list = json.loads(request.GET.get('selected_colleges'))
-    query = request.GET.get('selected_location')
     distance = int(request.GET.get('selected_distance'))
     grade = int(request.GET.get('selected_grade'))
-    origin_loc = CollegeData.get_lat_lng(query);
+    # origin_loc = CollegeData.get_lat_lng(query);
 
     new_college_list = []
     for clg in college_list:
         coll_fees = CollegeData.get_fees(clg[7])
-        coll_dist, coll_dur = CollegeData.get_dist_dur(clg[7], origin_loc)
+        coll_dist = clg[5]
         coll_grade = CollegeData.get_grade(clg[7])
         if coll_fees <= fees and coll_dist <= distance and coll_grade >= grade:
             new_college_list.append(clg)

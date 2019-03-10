@@ -1,7 +1,9 @@
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django import forms
 import googlemaps
 import json
+import pickle
 
 # Google API object for distance matrix
 gmaps_dm = googlemaps.Client(key='AIzaSyAzFFPgX-GryNpheDClG-PpEr1OGuHm6OY')
@@ -17,18 +19,6 @@ CATEGORY_CHOICES = (
     ('LOBCS', 'Ladies Other Backward Class(OBC)'),
 )
 
-INITIAL_BRANCH_CHOICES = (
-    ('IT', 'Information Techonology'),
-    ('Chemical', 'Chemical'),
-    ('Computer', 'Computer Engineering'),
-    ('Civil', 'Civil Engineering'),
-    ('Electrical', 'Electrical'),
-    ('EXTC','EXTC'),
-    ('ETRX','ETRX'),
-    ('Production','Production'),
-    ('Mechanical','Mechanical'),
-    ('Textile','Textile'),
-)
 
 BRANCH_CHOICES = (
     ('IT', 'Information Techonology'),
@@ -223,10 +213,10 @@ GRADES = {'vjti':9,
 class UserForm(forms.Form):
     name = forms.CharField(max_length=100)
     category = forms.CharField(max_length=15, widget=forms.Select(choices=CATEGORY_CHOICES))
-    score = forms.IntegerField()
+    score = forms.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(200)])
     college = forms.CharField(max_length=15, widget=forms.Select(choices=COLLEGE_CHOICES))
     # branch = forms.CharField(max_length=15, widget=forms.Select(choices=BRANCH_CHOICES))
-    branch = forms.ChoiceField(choices=INITIAL_BRANCH_CHOICES)
+    branch = forms.ChoiceField(choices=BRANCH_CHOICES)
 
 class PredictCollege(forms.Form):
     name = forms.CharField(max_length=100)
@@ -286,3 +276,8 @@ class CollegeData(models.Model):
     @staticmethod
     def get_grade(college_code):
         return GRADES[college_code]
+
+    @staticmethod
+    def get_branch(college_code):
+        branches = pickle.load(open('myapp/data/pickles/branches.pkl','rb'))
+        return branches[college_code]

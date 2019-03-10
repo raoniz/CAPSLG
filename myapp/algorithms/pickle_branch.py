@@ -1,7 +1,6 @@
 import pickle
 
 vjti = (
-    ('Chemical', 'Chemical'),
     ('IT', 'Information Techonology'),
     ('Computer', 'Computer Engineering'),
     ('Civil', 'Civil Engineering'),
