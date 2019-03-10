@@ -4,6 +4,7 @@ Django==2.1.7
 django-crispy-forms==1.7.2
 django-markdown-deux==1.0.5
 googlemaps==3.0.2
+gunicorn==19.9.0
 html5lib==1.0.1
 idna==2.8
 markdown2==2.3.7
