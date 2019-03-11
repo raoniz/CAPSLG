@@ -1,6 +1,6 @@
 # College Admission Predictor and Smart List Generator (CAPSLG)
 
-
+[![Heroku App Status](https://img.shields.io/badge/heroku-up-brightgreen.svg?style=for-the-badge)](https://capslg.herokuapp.com)
 [![Python Version](https://img.shields.io/pypi/pyversions/Django.svg?style=for-the-badge)](https://www.python.org/downloads/)
 [![Issues](https://img.shields.io/github/issues/raoniz/CAPSLG.svg?style=for-the-badge)](https://github.com/raoniz/CAPSLG/issues)
 ![Language Count](https://img.shields.io/github/languages/count/raoniz/CAPSLG.svg?style=for-the-badge&color=orange)
@@ -8,6 +8,7 @@
 ![Top Language](https://img.shields.io/github/languages/top/raoniz/CAPSLG.svg?style=for-the-badge&color=red)
 [![License: GPL-2.0](https://img.shields.io/badge/License-GPL--3.0-success.svg?style=for-the-badge)](https://opensource.org/licenses/GPL-3.0)
 ![Size](https://img.shields.io/github/repo-size/raoniz/CAPSLG.svg?style=for-the-badge&color=yellow)
+
 
 
 
