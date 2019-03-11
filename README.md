@@ -1,5 +1,9 @@
-# College Admission Predictor and Smart List Generator (CAPSLG)
+<p align="center"><img src="./static/icons/logo.png" border="0" alt="CAPSLG Logo" height="150px" width="150px"></p>
 
+<h1 align="center"> College Admission Predictor and<br> Smart List Generator (CAPSLG) </h1>
+
+<span align="center">
+  
 [![Heroku App Status](https://img.shields.io/badge/heroku-up-brightgreen.svg?style=for-the-badge)](https://capslg.herokuapp.com)
 [![Python Version](https://img.shields.io/pypi/pyversions/Django.svg?style=for-the-badge)](https://www.python.org/downloads/)
 [![Issues](https://img.shields.io/github/issues/raoniz/CAPSLG.svg?style=for-the-badge)](https://github.com/raoniz/CAPSLG/issues)
@@ -13,6 +17,9 @@
 
 
 A Django based web-project to compute probability of a student to secure admission in an Engineering college within the Mumbai region.
+
+
+</span>
 
 ----
 
