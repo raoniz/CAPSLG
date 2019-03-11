@@ -1,0 +1,464 @@
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #fafafa;
+}
+
+p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1.7em;
+    color: #999;
+}
+
+a,
+a:hover,
+a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.navbar {
+    padding: 15px 10px;
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 40px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #ddd;
+    margin: 40px 0;
+}
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+.wrapper {
+    display: flex;
+    width: 100%;
+}
+
+#sidebar {
+    width: 350px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 999;
+    background: #4ab0cd;
+    color: #fff;
+    transition: all 0.3s;
+}
+
+#sidebar.active {
+    margin-left: -350px;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #2890ab;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid #2890ab;
+}
+
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+
+#sidebar ul li a:hover {
+    color: #4ab0cd;
+    background: #fff;
+}
+
+#sidebar ul li.active>a,
+a[aria-expanded="true"] {
+    color: #fff;
+    background: #4ab0cd;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #4ab0cd;
+}
+
+/* ---------------------------------------------------
+    SIDEBAR SWITCHES
+----------------------------------------------------- */
+
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 42px;
+  height: 25px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #047693;
+}
+
+input:hover + .slider {
+  box-shadow: 0.5px 0.5px 5px 0px #047693;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(17px);
+  -ms-transform: translateX(17px);
+  transform: translateX(17px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.property > input[type=number] {
+    width: 95px;
+    height: 32px;
+    border: none;
+    border-radius: 10px;
+    background-color: #4ab0cd;
+    color: #fff;
+    float: right;
+    text-align: center;
+}
+
+.property {
+    background-color: #2890ab;
+    display: none;
+    padding: 10px 10px 10px 20px;
+}
+
+.dark-button {
+    background-color: #0e7e9b;
+    color: white;
+}
+
+.dark-button:hover {
+    box-shadow: 1px 2px 12px -2px #025b72;
+}
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+
+#content {
+    width: calc(100% - 350px);
+    padding: 40px;
+    min-height: 100vh;
+    transition: all 0.3s;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#content.active {
+    width: 100%;
+}
+
+/* ---------------------------------------------------
+    LIST OF COLLEGES
+----------------------------------------------------- */
+.list-of-college {
+    border: none !important;
+    margin-top: 2em;
+    background: #fafafa;
+}
+
+.list-group-item {
+    margin-bottom: 10px;
+    border-radius: 20px !important;
+    height: fit-content;
+    font-size: larger;
+    padding: 18px;
+    box-shadow: 5px 3px 15px -1px #bebebe;
+    background-color: #4ab0cd1f;
+    transition: all 0.17s cubic-bezier(0.57, -0.03, 0.5, 1) !important;
+    cursor: pointer;
+}
+
+.list-group-item:hover {
+        transform: scale(1.03);
+}
+
+.not-eligible {
+    text-align: center;
+    font-size: x-large;
+    color: #f26350;
+    margin-top: 50px;
+}
+
+/* ---------------------------------------------------
+    LIST OF COLLEGES LOADER
+----------------------------------------------------- */
+
+.list-loader {
+  display: inline-block;
+  margin: 30px auto;
+  width: fit-content;
+  height: fit-content;
+}
+.list-loader:after {
+  content: " ";
+  display: block;
+  width: 60px;
+  height: 60px;
+  margin: 1px;
+  border-radius: 50%;
+  border: 5px solid #fff;
+  border-color: #2890ab #4db9d721 #2890ab #4db9d721;
+  animation: list-loader 1.2s linear infinite;
+}
+@keyframes list-loader {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -350px;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+    #content {
+        width: 100%;
+    }
+    #content.active {
+        width: calc(100% - 350px);
+    }
+    #sidebarCollapse span {
+        display: none;
+    }
+}
+
+.navbar {
+  border-radius: 0px !important;
+}
+
+.form-container {
+  width: 50%;
+  box-shadow: 2px 2px 5px #333;
+  padding: 1.5%;
+  border-radius: 10px;
+  margin-top: 5%;
+}
+
+
+
+/* ---------------------------------------------------
+    STUDENT INFORMATION
+----------------------------------------------------- */
+
+.student-info {
+  padding: 15px;
+  box-shadow: 3px 2px 25px -6px #013643;
+  border-radius: 10px;
+  font-size: large;
+  background: #4db9d7;
+  color: white;
+}
+
+.student-info > h3 {
+  text-align: center;
+  padding: 6px 1px 0px 1px;
+}
+
+.row {
+  padding: 5px 3px;
+}
+
+.col-sm-4 {
+  text-align: center;
+}
+
+hr {
+  background-image: radial-gradient(white, #ffffff82, #0000ff00);;
+  border: 0;
+  height: 1px;
+}
+
+.student-info  span {
+  font-weight: 700;
+}
+
+/* ---------------------------------------------------
+    COLLEGE INFORMATION
+----------------------------------------------------- */
+
+.college-info {
+  border-top: 2px solid #2890abcc;
+  margin: 45px 0px 5px 0px;
+  padding: 10px 0px 0px 0px;
+}
+
+.college-info i {
+  font-size: large;
+}
+
+.college-info hr {
+  background: #a2a2a278;
+  width: 97%;
+  border: 0;
+  height: 1px;
+}
+
+.college-info .col-half-offset {
+  margin-left:4.166666667%;
+}
+
+
+/* ---------------------------------------------------
+    FILTER BUTTON && LOADER
+----------------------------------------------------- */
+
+button[disabled] {
+  cursor: wait;
+}
+
+.button-loader {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 15px;
+}
+.button-loader div {
+  position: absolute;
+  top: 5px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #fff;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.button-loader div:nth-child(1) {
+  left: 6px;
+  animation: button-loader1 0.6s infinite;
+}
+.button-loader div:nth-child(2) {
+  left: 6px;
+  animation: button-loader2 0.6s infinite;
+}
+.button-loader div:nth-child(3) {
+  left: 26px;
+  animation: button-loader2 0.6s infinite;
+}
+.button-loader div:nth-child(4) {
+  left: 45px;
+  animation: button-loader3 0.6s infinite;
+}
+@keyframes button-loader1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes button-loader3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes button-loader2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(19px, 0);
+  }
+}
+
+/* ---------------------------------------------------
+    LIST ACTIONS
+----------------------------------------------------- */
+
+.list-actions {
+  margin-top: 25px;
+}
+
+.list-actions .col-sm-3 {
+  text-align: center;
+}
