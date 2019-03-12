@@ -85,4 +85,10 @@ A Django based web-project to compute probability of a student to secure admissi
             Rahul Soni
         </a>
     </td>
+    <td>
+        <a href="https://github.com/meetkk">
+            <img src="https://github.com/meetkk.png" height=150px width=150px><br>
+            Meet Kataria
+        </a>
+    </td>
 </table>
