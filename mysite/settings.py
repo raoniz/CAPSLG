@@ -25,7 +25,7 @@ SECRET_KEY = 'm3ggl*s&-8n4rz$54#((+d=r$f$%e32w7f11=h+-ezfhq0w4j!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['capslg.herokuapp.com','localhost']
+ALLOWED_HOSTS = ['capslg.herokuapp.com', 'capslg-development.herokuapp.com' ,'localhost']
 
 
 # Application definition
