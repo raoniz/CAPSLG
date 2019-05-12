@@ -108,7 +108,8 @@
             <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
               <div class="container-fluid">
                 <div class="navbar-header">
-                  <a class="navbar-brand" href="#">College Admission Predictor and Smart List Generator</a>
+                  <a href="#" class="navbar-left"><img height=60px width=60px class="rounded-circle img-fluid" src="{% static 'icons/logo.png' %}"></a>
+                  <a class="navbar-brand" href="#">&emsp; College Admission Predictor and Smart List Generator</a>
                 </div>
                 <ul class="navbar-nav navbar-right">
                   <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
@@ -138,7 +139,7 @@
 	            	<div class="col-sm-4"><span>Location:</span> {{form_data.location}}</div>
 	            	<div class="col-sm-4">
 	            		<button class="btn dark-button">
-	            			<i class="fa fa-edit"></u></i> 
+	            			<i class="fa fa-edit"></u></i>
 	            			Edit choice
 	            		</button>
 	            	</div>
@@ -164,7 +165,7 @@
 	        		</div>
 	        		<div class="col-sm-3">
 	        			<button class="btn dark-button expand-all" data-expand="true">
-	        				<i class="fa fa-caret-down"></u></i> 
+	        				<i class="fa fa-caret-down"></u></i>
 	        				Expand all
 	        			</button>
 	        		</div>
@@ -201,7 +202,7 @@
               	Oops, There are no colleges that matches the applied filters!
               </div>
             </div>
-            <script type="text/javascript"> 
+            <script type="text/javascript">
             	var college_list = {{ colleges|safe }};
 	            var new_college_list = {{ colleges|safe }};
 	            var form_data = {{ form_data|safe }};
@@ -386,7 +387,7 @@
         			$(this).attr("data-expand","false")
         			$(this).empty();
         			$(this).append('<i class="fa fa-caret-up"></u></i>	        				Collapse all');
-  
+
         			list.each(function(key,value){
         				if(!($(college_info[key]).hasClass("show"))){
         					$(value).click();

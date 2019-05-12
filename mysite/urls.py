@@ -24,6 +24,6 @@ urlpatterns = [
     path('index/', views.index, name='index'),
     path('user_preference/', views.userPreference, name='user_preference'),
     path('smart_list/', views.smartList, name='smart_list'),
-    path('get_branches/', views.getBranches, name='get_branches'),
+    # path('get_branches/', views.getBranches, name='get_branches'),
     path('export_pdf/', views.export_pdf, name='export_pdf'),
 ]

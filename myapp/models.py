@@ -218,8 +218,7 @@ class UserForm(forms.Form):
     category = forms.CharField(max_length=15, widget=forms.Select(choices=CATEGORY_CHOICES))
     score = forms.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(200)])
     college = forms.CharField(max_length=15, widget=forms.Select(choices=COLLEGE_CHOICES))
-    # branch = forms.CharField(max_length=15, widget=forms.Select(choices=BRANCH_CHOICES))
-    branch = forms.ChoiceField(choices=BRANCH_CHOICES)
+    # branch = forms.ChoiceField(choices=BRANCH_CHOICES)
 
 class PredictCollege(forms.Form):
     name = forms.CharField(max_length=100)

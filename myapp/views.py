@@ -20,9 +20,16 @@ def index(request):
             flag = True
             form_data = flatten_to_dict(form)
             filename = 'myapp/data/pickles/colleges/' + form_data['college'] + '.pkl'
-            test = np.array([2019, form_data['branch'], form_data['category'], form_data['score']])
-            form_data['probability'] = predict_proba.main(filename, test)
-            form_data['branch'] = CollegeData.get_branch_name(form_data['branch'])
+            branches_code = [x for x,_ in CollegeData.get_branch(form_data['college'])]
+            probability = {}
+            branches = []
+            for b in branches_code:
+                test = np.array([2019, b, form_data['category'], form_data['score']])
+                b_name = CollegeData.get_branch_name(b)
+                branches.append(b_name)
+                probability[b_name] = predict_proba.main(filename, test)
+            form_data['probability'] = probability
+            form_data['branch'] = branches
             form_data['college'] = CollegeData.get_college_name(form_data['college'])
             form_data['category'] = CollegeData.get_category_name(form_data['category'])
             # redirect to a new URL:
@@ -34,9 +41,9 @@ def index(request):
         form = UserForm()
     return render(request, 'index.html', {'form': form, 'flag': flag})
 
-def getBranches(request):
-    college = request.GET.get('college')
-    return HttpResponse(json.dumps(CollegeData.get_branch(college)))
+# def getBranches(request):
+#     college = request.GET.get('college')
+#     return HttpResponse(json.dumps(CollegeData.get_branch(college)))
 
 
 def userPreference(request):
