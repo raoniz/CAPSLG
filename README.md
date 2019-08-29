@@ -81,7 +81,7 @@ A Django based web-project to compute probability of a student to secure admissi
     </td>
     <td>
         <a href="https://github.com/raoniz">
-            <img src="https://github.com/raoniz.png" height=150px width=150px><br>
+            <img src="https://github.com/er-raoniz.png" height=150px width=150px><br>
             Rahul Soni
         </a>
     </td>
