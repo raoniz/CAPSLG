@@ -1,6 +1,6 @@
 certifi==2019.3.9
 chardet==3.0.4
-Django==2.2.13
+Django==2.2.18
 django-crispy-forms==1.7.2
 django-markdown-deux==1.0.5
 googlemaps==3.0.2
